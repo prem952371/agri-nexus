@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
 import ToastContainer from '../components/ToastContainer';
@@ -7,13 +7,7 @@ import { useApp } from '../context/AppContext';
 
 export default function DashboardLayout() {
   const { role } = useApp();
-  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  if (!role) {
-    navigate('/login');
-    return null;
-  }
 
   return (
     <div className="flex h-screen bg-agri-light overflow-hidden">
@@ -39,7 +33,7 @@ export default function DashboardLayout() {
           <button onClick={() => setSidebarOpen(true)} className="p-1.5 text-gray-600 hover:text-forest-800">
             <Menu size={20} />
           </button>
-          <span className="text-sm font-semibold text-forest-800">AgriNexus</span>
+          <span className="text-sm font-semibold text-forest-800">KrishiSetu</span>
         </div>
 
         {/* Page content */}

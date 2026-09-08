@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TrendingUp, Package, DollarSign, ShoppingBag, Eye, Plus, AlertCircle, ArrowUpRight } from 'lucide-react';
-import { getProducts, getOrders, getUserStats } from '../services/api';
-import { useApp } from '../context/AppContext';
-import { StatCard, StatusBadge, LoadingState, EmptyState } from '../components/UIComponents';
+import { getProducts, getOrders, getUserStats } from '../../services/api';
+import { useApp } from '../../context/AppContext';
+import { StatCard, StatusBadge, LoadingState, EmptyState } from '../../components/UIComponents';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const DEMO_STATS = {

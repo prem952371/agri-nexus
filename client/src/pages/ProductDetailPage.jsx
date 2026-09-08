@@ -24,7 +24,7 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(10);
 
   useEffect(() => {
-    const fetch = async () => {
+    const loadProduct = async () => {
       try {
         setLoading(true);
         const res = await getProduct(id);
@@ -39,7 +39,7 @@ export default function ProductDetailPage() {
         setLoading(false);
       }
     };
-    fetch();
+    loadProduct();
   }, [id]);
 
   const handleAddToCart = () => {

@@ -71,7 +71,7 @@ export default function LandingPage() {
               </h1>
               
               <p className="text-lg text-gray-600 leading-relaxed mb-8 max-w-lg">
-                AgriNexus empowers farmers and FPOs to reach consumers and bulk buyers directly, 
+                KrishiSetu empowers farmers and FPOs to reach consumers and bulk buyers directly,
                 while AI-powered insights and smart logistics build a more efficient agricultural 
                 supply chain.
               </p>
@@ -193,7 +193,7 @@ export default function LandingPage() {
       <section id="how-it-works" className="py-20 bg-white">
         <div className="page-container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-forest-800 mb-3">How AgriNexus Works</h2>
+            <h2 className="text-3xl font-bold text-forest-800 mb-3">How KrishiSetu Works</h2>
             <p className="text-agri-muted max-w-xl mx-auto">
               A simple six-step process from farm to market, powered by technology and AI.
             </p>
@@ -264,21 +264,21 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* AgriNexus */}
+            {/* KrishiSetu */}
             <div className="card border-l-4 border-green-400">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
                   <Leaf size={18} className="text-green-600" />
                 </div>
-                <h3 className="font-bold text-gray-800 text-lg">AgriNexus Platform</h3>
+                <h3 className="font-bold text-gray-800 text-lg">KrishiSetu Platform</h3>
               </div>
               <div className="space-y-3">
-                {['Farmer / FPO', 'AgriNexus Platform', 'Consumer / Bulk Buyer'].map((step, i, arr) => (
+                {['Farmer / FPO', 'KrishiSetu Platform', 'Consumer / Bulk Buyer'].map((step, i, arr) => (
                   <div key={i}>
-                    <div className={`flex items-center gap-3 p-2 rounded-lg ${step === 'AgriNexus Platform' ? 'bg-green-50 border border-green-200' : 'bg-gray-50'}`}>
-                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${step === 'AgriNexus Platform' ? 'bg-green-500' : 'bg-forest-500'}`} />
-                      <span className={`text-sm font-medium ${step === 'AgriNexus Platform' ? 'text-forest-700' : 'text-gray-700'}`}>{step}</span>
-                      {step === 'AgriNexus Platform' && (
+                    <div className={`flex items-center gap-3 p-2 rounded-lg ${step === 'KrishiSetu Platform' ? 'bg-green-50 border border-green-200' : 'bg-gray-50'}`}>
+                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${step === 'KrishiSetu Platform' ? 'bg-green-500' : 'bg-forest-500'}`} />
+                      <span className={`text-sm font-medium ${step === 'KrishiSetu Platform' ? 'text-forest-700' : 'text-gray-700'}`}>{step}</span>
+                      {step === 'KrishiSetu Platform' && (
                         <span className="ml-auto text-xs text-green-600 font-medium flex items-center gap-1">
                           <Zap size={10} /> AI-powered
                         </span>
@@ -338,7 +338,7 @@ export default function LandingPage() {
         <div className="page-container text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-forest-300 mb-8 max-w-lg mx-auto">
-            Join thousands of farmers and buyers already using AgriNexus to build a better agricultural supply chain.
+            Join farmers and buyers using KrishiSetu to build a better agricultural supply chain.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/marketplace" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-forest-800 font-semibold rounded-lg hover:bg-forest-50 transition-colors">

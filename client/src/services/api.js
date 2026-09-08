@@ -1,47 +1,96 @@
-import axios from 'axios';
+import {
+  MOCK_ORDERS,
+  STORAGE_KEYS,
+  getMockProducts,
+  readMock,
+  writeMock,
+} from './mockData';
 
-const api = axios.create({
-  baseURL: '/api',
-  headers: { 'Content-Type': 'application/json' },
-  timeout: 10000,
-});
+const delay = (value) => new Promise(resolve => setTimeout(() => resolve(value), 180));
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    console.error('API Error:', error.response?.data || error.message);
-    return Promise.reject(error);
-  }
-);
+export const getProducts = async (params) => delay({ data: { success: true, data: getMockProducts(params) } });
 
-// Products
-export const getProducts = (params) => api.get('/products', { params });
-export const getProduct = (id) => api.get(`/products/${id}`);
-export const createProduct = (data) => api.post('/products', data);
-export const updateProduct = (id, data) => api.put(`/products/${id}`, data);
-export const deleteProduct = (id) => api.delete(`/products/${id}`);
+export const getProduct = async (id) => {
+  const product = getMockProducts({}).find(item => item._id === id) || getMockProducts({})[0];
+  return delay({ data: { success: true, data: product } });
+};
 
-// Orders
-export const getOrders = (params) => api.get('/orders', { params });
-export const getOrder = (id) => api.get(`/orders/${id}`);
-export const createOrder = (data) => api.post('/orders', data);
-export const updateOrderStatus = (id, status) => api.put(`/orders/${id}/status`, { status });
+export const createProduct = async (data) => {
+  const products = readMock(STORAGE_KEYS.products, getMockProducts({}));
+  const product = {
+    ...data,
+    _id: `mock-${Date.now()}`,
+    quantity: Number(data.quantity),
+    availableQuantity: Number(data.quantity),
+    price: Number(data.price),
+    isActive: true,
+  };
+  writeMock(STORAGE_KEYS.products, [product, ...products]);
+  return delay({ data: { success: true, data: product } });
+};
 
-// Forecast
-export const getForecast = (params) => api.get('/forecast', { params });
+export const updateProduct = async (id, data) => {
+  const products = readMock(STORAGE_KEYS.products, getMockProducts({}));
+  const updated = products.map(product => product._id === id ? { ...product, ...data } : product);
+  writeMock(STORAGE_KEYS.products, updated);
+  return delay({ data: { success: true, data: updated.find(product => product._id === id) } });
+};
 
-// Routes
-export const optimizeRoutes = (data) => api.post('/routes/optimize', data);
-export const getDeliveries = () => api.get('/routes/deliveries');
+export const deleteProduct = async (id) => updateProduct(id, { isActive: false });
 
-// Analytics
-export const getAnalyticsOverview = () => api.get('/analytics/overview');
-export const getImpactData = () => api.get('/analytics/impact');
+export const getOrders = async () => delay({ data: { success: true, data: readMock(STORAGE_KEYS.orders, MOCK_ORDERS) } });
 
-// Users
-export const getUsers = (params) => api.get('/users', { params });
-export const getUser = (id) => api.get(`/users/${id}`);
-export const getUserStats = (id) => api.get(`/users/${id}/stats`);
-export const createUser = (data) => api.post('/users', data);
+export const getOrder = async (id) => {
+  const order = readMock(STORAGE_KEYS.orders, MOCK_ORDERS).find(item => item.orderId === id);
+  return delay({ data: { success: true, data: order } });
+};
 
-export default api;
+export const createOrder = async (data) => {
+  const orders = readMock(STORAGE_KEYS.orders, MOCK_ORDERS);
+  const order = {
+    ...data,
+    orderId: `ORD-${Date.now()}`,
+    status: 'confirmed',
+    paymentStatus: 'paid',
+    estimatedDelivery: new Date(Date.now() + 4 * 86400000).toLocaleDateString('en-IN'),
+    createdAt: new Date().toISOString(),
+  };
+  writeMock(STORAGE_KEYS.orders, [order, ...orders]);
+  return delay({ data: { success: true, data: order } });
+};
+
+export const updateOrderStatus = async (id, status) => {
+  const orders = readMock(STORAGE_KEYS.orders, MOCK_ORDERS).map(order => order.orderId === id ? { ...order, status } : order);
+  writeMock(STORAGE_KEYS.orders, orders);
+  return delay({ data: { success: true, data: orders.find(order => order.orderId === id) } });
+};
+
+export const getForecast = async ({ product = 'Tomato', location = 'Delhi', days = 7 } = {}) => {
+  const base = { Tomato: 3800, Wheat: 6200, Rice: 4500, Potato: 2800, Onion: 7500, Maize: 3200 }[product] || 3000;
+  const forecast = Array.from({ length: Number(days) }, (_, index) => {
+    const predictedDemand = Math.round(base * (1 + index * 0.012));
+    return { date: `Day ${index + 1}`, predictedDemand, low: Math.round(predictedDemand * 0.88), high: Math.round(predictedDemand * 1.12) };
+  });
+  const historicalData = Array.from({ length: 14 }, (_, index) => ({ date: `Past ${14 - index}`, actualDemand: Math.round(base * (0.92 + index * 0.006)) }));
+  return delay({ data: { success: true, data: { product, location, forecast, historicalData, trend: 'increasing', confidence: 84, averageDemand: Math.round(base * 1.04), trendChangePct: 6.2, recommendation: `Demand for ${product} in ${location} is trending upward. Consider listing 6% more supply.` } } });
+};
+
+export const optimizeRoutes = async () => delay({ data: {
+  optimizedRoute: [{ group: 1, orders: ['ORD-20260905', 'ORD-20260908'], route: 'Karnal → Ludhiana → Delhi', distance: 420, cost: 3900, vehicleType: '10-Ton Truck', stops: 3 }],
+  totalDistance: 420, estimatedCost: 3900, traditionalDistance: 720, traditionalCost: 7200, estimatedSavings: 3300, savingsPercent: 45.8,
+} });
+
+export const getDeliveries = async () => delay({ data: { success: true, data: readMock(STORAGE_KEYS.orders, MOCK_ORDERS) } });
+
+export const getAnalyticsOverview = async () => delay({ data: { success: true, data: {
+  totalFarmers: 12400, totalProducts: 2840, totalOrders: 48500, totalValue: 12800000,
+  monthlyOrders: [{ month: 'Apr', orders: 4200 }, { month: 'May', orders: 5100 }, { month: 'Jun', orders: 6300 }, { month: 'Jul', orders: 7200 }, { month: 'Aug', orders: 8100 }, { month: 'Sep', orders: 9400 }],
+} } });
+
+export const getImpactData = async () => delay({ data: { success: true, data: {} } });
+export const getUsers = async () => delay({ data: { success: true, data: [] } });
+export const getUser = async (id) => delay({ data: { success: true, data: { _id: id } } });
+export const getUserStats = async () => delay({ data: { success: true, data: {} } });
+export const createUser = async (data) => delay({ data: { success: true, data } });
+
+export default { getProducts, getProduct, createProduct, updateProduct, deleteProduct, getOrders, getOrder, createOrder, updateOrderStatus, getForecast, optimizeRoutes, getDeliveries, getAnalyticsOverview, getImpactData, getUsers, getUser, getUserStats, createUser };
