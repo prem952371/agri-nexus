@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sprout, ShoppingBag, Building2, Truck, ShieldCheck, ArrowRight, Leaf } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -73,10 +73,24 @@ const DASHBOARD_ROUTES = {
 export default function LoginPage() {
   const { selectRole } = useApp();
   const navigate = useNavigate();
+  const [showRegister, setShowRegister] = useState(false);
+  const [registration, setRegistration] = useState({ name: '', village: '', phone: '' });
 
   const handleSelectRole = (roleObj) => {
     selectRole(roleObj.id, roleObj.user);
     navigate(DASHBOARD_ROUTES[roleObj.id] || '/marketplace');
+  };
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+    const profile = {
+      name: registration.name || 'Demo Farmer',
+      location: registration.village || 'Karnal, Haryana',
+      phone: registration.phone,
+    };
+    localStorage.setItem('krishisetu_profile', JSON.stringify(profile));
+    selectRole('farmer', profile);
+    navigate('/farmer');
   };
 
   return (
@@ -91,7 +105,7 @@ export default function LoginPage() {
               <Leaf size={26} className="text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-forest-800 mb-2">Welcome to AgriNexus</h1>
+          <h1 className="text-3xl font-bold text-forest-800 mb-2">Welcome to KrishiSetu</h1>
           <p className="text-agri-muted max-w-md mx-auto">
             Select your role to enter the demo. This is an SIH demonstration platform.
           </p>
@@ -101,8 +115,22 @@ export default function LoginPage() {
           </div>
         </div>
 
+        <div className="flex justify-center gap-2 mb-8">
+          <button onClick={() => setShowRegister(false)} className={`px-4 py-2 text-sm font-semibold rounded-lg ${!showRegister ? 'bg-forest-800 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}>Demo Login</button>
+          <button onClick={() => setShowRegister(true)} className={`px-4 py-2 text-sm font-semibold rounded-lg ${showRegister ? 'bg-forest-800 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}>Register</button>
+        </div>
+
+        {showRegister && (
+          <form onSubmit={handleRegister} className="card max-w-xl mx-auto mb-8 space-y-4">
+            <div><h2 className="text-xl font-bold text-forest-800">Create your demo profile</h2><p className="text-sm text-agri-muted mt-1">Your details stay in this browser only.</p></div>
+            <label className="label">Full name<input required className="input mt-1" value={registration.name} onChange={e => setRegistration({ ...registration, name: e.target.value })} placeholder="e.g. Ramesh Kumar" /></label>
+            <div className="grid sm:grid-cols-2 gap-4"><label className="label">Village / city<input required className="input mt-1" value={registration.village} onChange={e => setRegistration({ ...registration, village: e.target.value })} placeholder="e.g. Karnal, Haryana" /></label><label className="label">Mobile number<input required className="input mt-1" value={registration.phone} onChange={e => setRegistration({ ...registration, phone: e.target.value })} placeholder="10 digit mobile" /></label></div>
+            <button className="btn-primary w-full justify-center" type="submit">Create profile <ArrowRight size={16} /></button>
+          </form>
+        )}
+
         {/* Role cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        {!showRegister && <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
           {ROLES.map(role => (
             <button
               key={role.id}
@@ -142,7 +170,7 @@ export default function LoginPage() {
               </p>
             </button>
           ))}
-        </div>
+        </div>}
 
         <p className="text-center text-xs text-agri-muted mt-8">
           This platform is a demonstration for Smart India Hackathon 2024 — Problem Statement #26033.<br />

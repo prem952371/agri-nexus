@@ -5,22 +5,19 @@ const app = require('./app');
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/agrinexus';
 
-const connectAndStart = async () => {
-  try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log(`✅  MongoDB connected: ${mongoose.connection.host}`);
+const start = () => {
+  app.listen(PORT, () => {
+    console.log(`🚀  AgriNexus API running on http://localhost:${PORT}`);
+    console.log(`    Environment : ${process.env.NODE_ENV || 'development'}`);
+  });
 
-    app.listen(PORT, () => {
-      console.log(`🚀  AgriNexus API running on http://localhost:${PORT}`);
-      console.log(`    Environment : ${process.env.NODE_ENV || 'development'}`);
-    });
-  } catch (err) {
-    console.error('❌  MongoDB connection failed:', err.message);
-    process.exit(1);
-  }
+  mongoose.connect(MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+  }).then(() => {
+    console.log(`✅  MongoDB connected: ${mongoose.connection.host}`);
+  }).catch((err) => {
+    console.error('❌  MongoDB connection failed; API started in demo mode:', err.message);
+  });
 };
 
 mongoose.connection.on('disconnected', () => {
@@ -33,4 +30,4 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-connectAndStart();
+start();

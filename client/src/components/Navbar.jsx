@@ -5,13 +5,13 @@ import { useApp } from '../context/AppContext';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { cartCount, role, logout } = useApp();
+  const { cartCount, role, logout, language, setLanguage, t } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
 
   const navLinks = [
-    { label: 'Home', to: '/' },
-    { label: 'Marketplace', to: '/marketplace' },
+    { label: t('Home'), to: '/' },
+    { label: t('Marketplace'), to: '/marketplace' },
     { label: 'How It Works', to: '/#how-it-works' },
     { label: 'For Farmers', to: '/#for-farmers' },
     { label: 'For Buyers', to: '/#for-buyers' },
@@ -30,7 +30,7 @@ export default function Navbar() {
               <Leaf size={18} className="text-white" />
             </div>
             <div>
-              <div className="text-lg font-bold text-forest-800 leading-none">AgriNexus</div>
+              <div className="text-lg font-bold text-forest-800 leading-none">KrishiSetu</div>
               <div className="text-[10px] text-agri-muted font-medium leading-none mt-0.5">Digital Agricultural Marketplace</div>
             </div>
           </Link>
@@ -54,11 +54,15 @@ export default function Navbar() {
 
           {/* Right actions */}
           <div className="hidden lg:flex items-center gap-3">
+            <select aria-label="Language" value={language} onChange={e => setLanguage(e.target.value)} className="select text-xs py-1.5 px-2 w-auto">
+              <option>English</option>
+              <option>Hindi</option>
+            </select>
             {role ? (
               <>
                 <Link to="/cart" className="relative btn-ghost">
                   <ShoppingCart size={18} />
-                  <span>Cart</span>
+                  <span>{t('Cart')}</span>
                   {cartCount > 0 && (
                     <span className="absolute -top-1 -right-1 w-5 h-5 bg-forest-600 text-white text-xs rounded-full flex items-center justify-center font-bold">
                       {cartCount > 9 ? '9+' : cartCount}
@@ -81,7 +85,7 @@ export default function Navbar() {
                   Explore Marketplace
                 </Link>
                 <Link to="/login" className="btn-primary">
-                  Login
+                  {t('Login')}
                 </Link>
               </>
             )}

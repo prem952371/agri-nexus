@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Package, Plus, ShoppingBag, TrendingUp, DollarSign,
   Store, ShoppingCart, ClipboardList, MapPin, BarChart2, Users,
-  Truck, Route, Activity, Leaf, LogOut, Settings, ChevronRight
+  Truck, Route, Activity, Leaf, LogOut, Settings, ChevronRight, CloudSun,
+  IndianRupee, FileText, MessageCircle, Bell, UserRound, HelpCircle
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -44,6 +45,34 @@ const roleMenus = {
   ],
 };
 
+const commonMenu = [
+  { label: 'Weather', to: '/weather', icon: CloudSun },
+  { label: 'Mandi Prices', to: '/market-prices', icon: IndianRupee },
+  { label: 'Government Schemes', to: '/schemes', icon: FileText },
+  { label: 'Community', to: '/community', icon: Users },
+  { label: 'Messages', to: '/messages', icon: MessageCircle },
+  { label: 'Notifications', to: '/notifications', icon: Bell },
+  { label: 'My Profile', to: '/profile', icon: UserRound },
+  { label: 'Help & Support', to: '/help', icon: HelpCircle },
+  { label: 'Settings', to: '/settings', icon: Settings },
+];
+
+const allPagesMenu = [
+  { label: 'Farmer Dashboard', to: '/farmer', icon: LayoutDashboard },
+  { label: 'Marketplace', to: '/marketplace', icon: Store },
+  { label: 'Cart', to: '/cart', icon: ShoppingCart },
+  { label: 'Buyer Orders', to: '/buyer/orders', icon: ClipboardList },
+  { label: 'Add Produce', to: '/farmer/add-produce', icon: Plus },
+  { label: 'My Produce', to: '/farmer/produce', icon: Package },
+  { label: 'Demand Forecast', to: '/farmer/forecast', icon: TrendingUp },
+  { label: 'Earnings', to: '/farmer/earnings', icon: DollarSign },
+  { label: 'Route Optimization', to: '/logistics/routes', icon: Route },
+  { label: 'Delivery Orders', to: '/logistics/deliveries', icon: Truck },
+  { label: 'Admin Dashboard', to: '/admin', icon: BarChart2 },
+  { label: 'Supply & Demand', to: '/admin/supply-demand', icon: TrendingUp },
+  { label: 'Impact Dashboard', to: '/admin/impact', icon: Activity },
+];
+
 const roleLabels = {
   farmer: { label: 'Farmer', color: 'bg-green-100 text-green-800' },
   consumer: { label: 'Consumer', color: 'bg-blue-100 text-blue-800' },
@@ -53,9 +82,9 @@ const roleLabels = {
 };
 
 export default function Sidebar() {
-  const { role, user, logout } = useApp();
+  const { role, user, logout, t, language, setLanguage } = useApp();
   const navigate = useNavigate();
-  const menuItems = roleMenus[role] || [];
+  const menuItems = [...(roleMenus[role] || allPagesMenu), ...commonMenu];
   const roleInfo = roleLabels[role] || { label: role, color: 'bg-gray-100 text-gray-800' };
 
   const handleLogout = () => {
@@ -71,7 +100,7 @@ export default function Sidebar() {
           <Leaf size={15} className="text-white" />
         </div>
         <div>
-          <div className="text-sm font-bold text-forest-800 leading-none">AgriNexus</div>
+          <div className="text-sm font-bold text-forest-800 leading-none">KrishiSetu</div>
           <div className="text-[10px] text-agri-muted mt-0.5">Digital Marketplace</div>
         </div>
       </div>
@@ -86,7 +115,7 @@ export default function Sidebar() {
           </div>
           <div className="min-w-0">
             <div className="text-sm font-semibold text-gray-800 truncate">
-              {user?.name || 'Demo User'}
+              {user?.name || 'Prototype Visitor'}
             </div>
             <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${roleInfo.color}`}>
               {roleInfo.label}
@@ -107,23 +136,30 @@ export default function Sidebar() {
             }
           >
             <item.icon size={16} />
-            <span>{item.label}</span>
+            <span>{t(item.label)}</span>
           </NavLink>
         ))}
 
         <div className="pt-2 mt-2 border-t border-agri-border">
           <NavLink to="/marketplace" className="sidebar-link">
             <Store size={16} />
-            <span>Browse Marketplace</span>
+            <span>{t('Marketplace')}</span>
           </NavLink>
         </div>
       </nav>
 
       {/* Role switcher & logout */}
       <div className="border-t border-agri-border p-3 space-y-1">
+        <label className="flex items-center justify-between gap-2 px-3 py-2 text-xs text-gray-500">
+          <span>{t('Language')}</span>
+          <select aria-label="Language" value={language} onChange={e => setLanguage(e.target.value)} className="select text-xs py-1 px-2 w-auto">
+            <option>English</option>
+            <option>Hindi</option>
+          </select>
+        </label>
         <NavLink to="/login" className="sidebar-link text-xs">
           <Settings size={14} />
-          <span>Switch Role</span>
+          <span>{t('Settings')}</span>
         </NavLink>
         <button onClick={handleLogout} className="sidebar-link w-full text-red-500 hover:bg-red-50 hover:text-red-600">
           <LogOut size={16} />

@@ -32,7 +32,7 @@ export default function ImpactPage() {
     <div>
       <div className="mb-6">
         <h1 className="section-title">Intermediary Impact Analysis</h1>
-        <p className="section-subtitle">Demonstrating how AgriNexus reduces supply-chain inefficiencies</p>
+        <p className="section-subtitle">Demonstrating how KrishiSetu reduces supply-chain inefficiencies</p>
       </div>
 
       <div className="inline-flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg text-xs mb-6">
@@ -58,7 +58,7 @@ export default function ImpactPage() {
             ]
           },
           {
-            title: 'AgriNexus Platform',
+            title: 'KrishiSetu Platform',
             icon: '✅',
             color: 'border-green-200 bg-green-50',
             badgeColor: 'bg-green-100 text-green-700',
@@ -120,7 +120,7 @@ export default function ImpactPage() {
               <Tooltip formatter={v => [`₹${v}/kg`]} />
               <Legend />
               <Bar dataKey="traditional" fill="#ef4444" name="Traditional" radius={[0, 3, 3, 0]} />
-              <Bar dataKey="agrinexus" fill="#1e4428" name="AgriNexus" radius={[0, 3, 3, 0]} />
+              <Bar dataKey="agrinexus" fill="#1e4428" name="KrishiSetu" radius={[0, 3, 3, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -143,13 +143,13 @@ export default function ImpactPage() {
       </div>
 
       {/* Platform efficiency radar */}
-      <ChartCard title="Platform Performance Index" subtitle="AgriNexus vs Traditional Supply Chain (score out of 100)">
+      <ChartCard title="Platform Performance Index" subtitle="KrishiSetu vs Traditional Supply Chain (score out of 100)">
         <ResponsiveContainer width="100%" height={300}>
           <RadarChart data={METRICS}>
             <PolarGrid />
             <PolarAngleAxis dataKey="metric" tick={{ fontSize: 12 }} />
             <Radar name="Traditional" dataKey="traditional" stroke="#ef4444" fill="#ef4444" fillOpacity={0.15} />
-            <Radar name="AgriNexus" dataKey="agrinexus" stroke="#1e4428" fill="#1e4428" fillOpacity={0.3} />
+            <Radar name="KrishiSetu" dataKey="agrinexus" stroke="#1e4428" fill="#1e4428" fillOpacity={0.3} />
             <Legend />
             <Tooltip />
           </RadarChart>

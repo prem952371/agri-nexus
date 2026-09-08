@@ -14,7 +14,7 @@ export default function Footer() {
                 <Leaf size={18} className="text-white" />
               </div>
               <div>
-                <div className="text-lg font-bold">AgriNexus</div>
+                <div className="text-lg font-bold">KrishiSetu</div>
                 <div className="text-xs text-forest-300">Digital Agricultural Marketplace</div>
               </div>
             </div>
@@ -53,7 +53,7 @@ export default function Footer() {
             <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Resources</h4>
             <ul className="space-y-2.5">
               {[
-                'About AgriNexus',
+                  'About KrishiSetu',
                 'How It Works',
                 'Farmer Guide',
                 'Buyer Guide',
@@ -86,7 +86,7 @@ export default function Footer() {
                 <Mail size={14} className="mt-0.5 flex-shrink-0" />
                 <div>
                   <div className="text-white font-medium">Email Support</div>
-                  <div>help@agrinexus.gov.in</div>
+                  <div>help@krishisetu.gov.in</div>
                 </div>
               </div>
               <div className="flex items-start gap-2 text-forest-300 text-sm">
@@ -106,7 +106,7 @@ export default function Footer() {
         <div className="page-container py-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-forest-400 text-xs text-center sm:text-left">
-              © 2026 AgriNexus — An initiative of Department of Consumer Affairs, Government of India. 
+              © 2026 KrishiSetu — An initiative of Department of Consumer Affairs, Government of India.
               <span className="block sm:inline sm:ml-2">
                 This is a demonstration platform for Smart India Hackathon 2024.
               </span>

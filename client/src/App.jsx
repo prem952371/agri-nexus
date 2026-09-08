@@ -33,6 +33,10 @@ import DeliveryOrdersPage from './pages/logistics/DeliveryOrdersPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import SupplyDemandPage from './pages/admin/SupplyDemandPage';
 import ImpactPage from './pages/admin/ImpactPage';
+import {
+  ChatPage, CommunityPage, HelpPage, MarketPricesPage, NotificationsPage,
+  ProfilePage, SchemesPage, SettingsPage, WeatherPage,
+} from './pages/PrototypePages';
 
 export default function App() {
   return (
@@ -45,10 +49,27 @@ export default function App() {
             <Route path="/marketplace" element={<MarketplacePage />} />
             <Route path="/marketplace/:id" element={<ProductDetailPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/market-prices" element={<MarketPricesPage />} />
+            <Route path="/schemes" element={<SchemesPage />} />
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/weather" element={<WeatherPage />} />
+            <Route path="/help" element={<HelpPage />} />
           </Route>
 
           {/* Auth */}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<DashboardLayout />}>
+            <Route index element={<ProfilePage />} />
+          </Route>
+          <Route path="/notifications" element={<DashboardLayout />}>
+            <Route index element={<NotificationsPage />} />
+          </Route>
+          <Route path="/messages" element={<DashboardLayout />}>
+            <Route index element={<ChatPage />} />
+          </Route>
+          <Route path="/settings" element={<DashboardLayout />}>
+            <Route index element={<SettingsPage />} />
+          </Route>
 
           {/* Farmer dashboard */}
           <Route path="/farmer" element={<DashboardLayout />}>

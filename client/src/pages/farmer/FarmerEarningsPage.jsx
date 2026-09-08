@@ -72,7 +72,7 @@ export default function FarmerEarningsPage() {
 
       {/* Payment comparison */}
       <div className="card mb-6 bg-forest-50 border-forest-200">
-        <h3 className="font-bold text-forest-800 mb-4">AgriNexus vs Traditional — Your Earnings</h3>
+        <h3 className="font-bold text-forest-800 mb-4">KrishiSetu vs Traditional — Your Earnings</h3>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="bg-white rounded-xl p-4 border border-red-200">
             <div className="text-sm font-semibold text-red-700 mb-2">❌ Via Traditional Middlemen</div>
@@ -80,13 +80,13 @@ export default function FarmerEarningsPage() {
             <div className="text-xs text-gray-500 mt-1">At ~₹18/kg average (middlemen take ~25%)</div>
           </div>
           <div className="bg-white rounded-xl p-4 border border-green-200">
-            <div className="text-sm font-semibold text-green-700 mb-2">✓ Via AgriNexus (Direct)</div>
+            <div className="text-sm font-semibold text-green-700 mb-2">✓ Via KrishiSetu (Direct)</div>
             <div className="text-2xl font-bold text-green-600">₹1,57,000</div>
             <div className="text-xs text-gray-500 mt-1">At ₹24/kg average (direct to buyers)</div>
           </div>
         </div>
         <div className="mt-3 p-3 bg-green-100 rounded-xl text-sm text-green-800 font-medium">
-          💰 You earned <strong>₹39,250 more</strong> (33% increase) by using AgriNexus directly.
+          💰 You earned <strong>₹39,250 more</strong> (33% increase) by using KrishiSetu directly.
           <span className="block text-xs font-normal text-green-600 mt-0.5">Illustrative comparison — actual amounts may vary</span>
         </div>
       </div>
