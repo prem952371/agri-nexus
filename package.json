@@ -1,0 +1,13 @@
+{
+  "name": "agri-nexus",
+  "version": "1.0.0",
+  "description": "AgriNexus - Digital Agricultural Marketplace",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "seed": "npm run seed --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
